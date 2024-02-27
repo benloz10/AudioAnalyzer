@@ -8,13 +8,21 @@
 * 941  *    0    #
 */
 
-void PrintBar(const uint16_t value) {
-	const int maxLength = 128;
-	const double barMult = (double)value / 65536;
-	const int barLength = maxLength * barMult;
+void PrintBar(const int16_t value) {
+	const int maxLength = 180;
+	const double barMult = (double)((value*4)+32768) / 65536;
+	const int pointPos = maxLength * barMult;
 	std::string bar = "";
-	for (int i = 0; i < barLength; i++) {
-		bar += "=";
+	for (int i = 0; i < maxLength; i++) {
+		if (i >= pointPos && i <= maxLength / 2) {
+			bar += '=';
+		}
+		else if (i >= maxLength / 2 && i <= pointPos) {
+			bar += '=';
+		}
+		else {
+			bar += ' ';
+		}
 	}
 	std::cout << bar << std::endl;
 }
@@ -31,7 +39,8 @@ int main() {
 
 	//ITERATE THROUGH AUDIO DATA:
 	for (int i = 0; i < waveReader.audio.size()-1; i+=2) {
-		uint16_t data = waveReader.audio[i] | waveReader.audio[i+1] << 8;
+		//uint16_t data = waveReader.audio[i] | waveReader.audio[i+1] << 8;
+		int16_t data = waveReader.audio[i + 1] | waveReader.audio[i] << 8;
 		PrintBar(data);
 	}
 
