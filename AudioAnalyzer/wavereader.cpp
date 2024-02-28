@@ -10,8 +10,6 @@ bool WaveReader::LoadFile(std::string fileName) {
 
 	std::vector<uint8_t> binaryData((std::istreambuf_iterator<char>(audioFile)), std::istreambuf_iterator<char>());
 
-	int ptr = 0;
-
 	for (int ptr = 0; ptr < 44; ptr++) {
 		uint8_t value = binaryData[ptr];
 		if (ptr < 4) {

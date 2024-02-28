@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "wavereader.h"
 /*Dial Tone Frequencies:
 *     1209 1336 1477
@@ -11,7 +12,7 @@
 void PrintBar(const int16_t value) {
 	const int maxLength = 180;
 	const double barMult = (double)((value*4)+32768) / 65536;
-	const int pointPos = maxLength * barMult;
+	const int pointPos = static_cast<int>(maxLength * barMult);
 	std::string bar = "";
 	for (int i = 0; i < maxLength; i++) {
 		if (i >= pointPos && i <= maxLength / 2) {
